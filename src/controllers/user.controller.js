@@ -163,8 +163,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 
     return res
         .status(200)
-        .clearcookie("accessToken", options)
-        .clearcookie("refreshToken", options)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
         .json(new ApiResponse(200, {}, "User logged Out"))
 })
 
@@ -173,10 +173,10 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
         if (!incomingRefreshToken) {
-            throw new ApiError(401, "unauthorized request")
+            throw new ApiError(401, "Unauthorized request")
         }
 
-        const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_EXPIRY)
+        const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
 
         const user = await User.findById(decodedToken?._id)
 
@@ -197,8 +197,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
         return res
             .status(200)
-            .ccookie("accessToken", accessToken, options)
-            .ccookie("refreshToken", newRefreshToken, options)
+            .cookie("accessToken", accessToken, options)
+            .cookie("refreshToken", newRefreshToken, options)
             .json(new ApiResponse(
                 200,
                 { accessToken, refreshToken: newRefreshToken },

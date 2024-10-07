@@ -46,6 +46,8 @@ const userSchema = new Schema({
     }
 }, { timestamps: true })
 
+//Arrow function not used due to context issues as will use this keyword
+//Using mongoose pre hook
 userSchema.pre("save", async function (next){
     if (!this.isModified("password")) return next();
 
@@ -53,10 +55,12 @@ userSchema.pre("save", async function (next){
     next() 
 })
 
+//Mongoose method
 userSchema.methods.isPasswordCorrect = async function (password){
     return await bcrypt.compare(password, this.password)
 }
 
+//Mongoose method
 userSchema.methods.generateAccessToken = function(){
     return jwt.sign(
         {
@@ -72,6 +76,7 @@ userSchema.methods.generateAccessToken = function(){
     )
 }
 
+//Mongoose method
 userSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
