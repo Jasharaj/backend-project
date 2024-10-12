@@ -36,6 +36,7 @@ const videoSchema = new Schema({
     }
 }, { timestamps: true })
 
+//If you have thousands of video documents and you want to show them in pages of 10 per page, this plugin helps by returning only the required data for each page, along with additional info like the total number of pages, next page, etc: ChatGPT
 videoSchema.plugin(mongooseAggregatePaginate)
 
 export const Video = mongoose.model("Video", videoSchema)   

@@ -16,8 +16,8 @@ const uploadOnCloudinary = async (localFilePath) => {
         })
         //file has been uploaded successfully
         // console.log("File is uploaded on cloudinary ", response.url)
-        fs.unlinkSync(localFilePath)
-        return response;
+        fs.unlinkSync(localFilePath) //The fs.unlinkSync() function is used to delete the local file from the file system after upload: ChatGPT
+        return response
     } catch (error) {
         fs.unlinkSync(localFilePath) //remove the locally saved temporary file as the upload operation got failed
         return null

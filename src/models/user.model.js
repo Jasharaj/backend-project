@@ -53,6 +53,12 @@ userSchema.pre("save", async function (next){
 
     this.password = await bcrypt.hash(this.password, 10)
     next() 
+
+    /*The 10 in bcrypt.hash(this.password, 10) refers to the salt rounds used when hashing the password.
+    Explanation:
+    Salt: A random value added to the password before hashing to make the hash output unique, even for identical passwords.
+    Salt rounds: The number of times the hashing process is applied (or the computational complexity). The higher the  number, the more secure but slower the hashing process.
+    In this case, 10 means the password will go through 10 rounds of hashing, which provides a good balance between    security and performance.*/
 })
 
 //Mongoose method
